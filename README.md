@@ -1,6 +1,6 @@
 # Google Maps Scraper - Google Map API Integration
 
-![screenshoot](dummy/screenshot/Screenshot (201).png)
+![screenshot](https://github.com/readloud/gmaps_data_scraper/blob/main/dummy/screenshot/Screenshot%20(201).png)
 
 ```
 # Buat virtual environment
