@@ -1,5 +1,8 @@
-# Google Maps Scraper
+# Google Maps Scraper - Google Map API Integration
 
+![screenshoot](dummy/screenshot/Screenshot (201).png)
+
+```
 # Buat virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
@@ -51,6 +54,7 @@ python manage.py createsuperuser
 
 # Jalankan server
 python manage.py runserver
+```
 
 # Akses Admin Panel
 
