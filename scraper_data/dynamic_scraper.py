@@ -1,5 +1,5 @@
 """
-Dynamic Google Maps Scraper - Fixed Version
+Dynamic Google Maps Scraper - Fixed Version with Headless Mode
 """
 
 import asyncio
@@ -42,7 +42,7 @@ class DynamicPlaceData:
 
 class DynamicGoogleMapsScraper:
     """
-    Dynamic Scraper - Browser always visible for reliability
+    Dynamic Scraper - Fixed to run in headless mode for servers
     """
     
     INDONESIAN_PROVINCES = [
@@ -57,8 +57,8 @@ class DynamicGoogleMapsScraper:
         'Maluku Utara', 'Papua', 'Papua Barat', 'Papua Tengah', 'Papua Pegunungan'
     ]
     
-    def __init__(self, headless: bool = False, max_results: int = 50):
-        self.headless = False  # Always visible for better scraping
+    def __init__(self, headless: bool = True, max_results: int = 50):
+        self.headless = True  # Always headless for server compatibility
         self.max_results = max_results
         self.scroll_count = 5
         self.delay_between_scroll = 2
@@ -74,16 +74,23 @@ class DynamicGoogleMapsScraper:
         await self._close()
     
     async def _start(self):
-        """Start browser dengan mode visible"""
+        """Start browser with headless mode enabled"""
         self.playwright = await async_playwright().start()
         
+        # Launch with headless=True for server compatibility
         self.browser = await self.playwright.chromium.launch(
-            headless=False,  # Always visible
+            headless=True,  # Always headless
             args=[
                 '--disable-blink-features=AutomationControlled',
                 '--disable-features=IsolateOrigins,site-per-process',
                 '--no-sandbox',
                 '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--disable-setuid-sandbox',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-web-security',
             ]
         )
         
@@ -100,7 +107,7 @@ class DynamicGoogleMapsScraper:
             'Accept-Language': 'id-ID,id;q=0.9,en;q=0.8',
         })
         
-        print(f"✅ Browser ready (Always Visible Mode)")
+        print(f"✅ Browser ready (Headless Mode enabled for server compatibility)")
     
     async def _close(self):
         """Tutup semua resource"""
