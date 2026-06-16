@@ -42,7 +42,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # CSRF Cookie Settings
-CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = False # not DEBUG
 CSRF_COOKIE_HTTPONLY = False  # Biarkan False untuk development
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_USE_SESSIONS = False
@@ -52,7 +52,7 @@ SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Security Middleware
-SECURE_SSL_REDIRECT = not DEBUG
+SECURE_SSL_REDIRECT = False # not DEBUG
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # =========================================
 
