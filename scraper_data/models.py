@@ -3,11 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 class Place(models.Model):
-    # ... existing fields ...
-    
-    
-    
-class Place(models.Model):
     """Model untuk menyimpan data tempat dari Google Maps"""
     
     CATEGORY_CHOICES = [
