@@ -24,6 +24,9 @@ RUN playwright install chromium
 # Copy project
 COPY . .
 
+# Set working directory to the Django project root
+WORKDIR /app/maps_scraper_admin
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
