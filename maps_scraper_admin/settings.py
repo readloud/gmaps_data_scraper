@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security - SETELAH SECRET_KEY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-demo-key-change-me')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'False'
 HEADLESS = os.environ.get('DJANGO_HEADLESS', 'True') == 'True'
 
 # ============ PERBAIKAN CSRF ============
