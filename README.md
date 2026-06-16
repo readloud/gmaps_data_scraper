@@ -1,4 +1,4 @@
-# Google Maps Scraper -  - Django Admin Panel
+# Google Maps Scraper - Django Admin Panel
 
 A powerful web application for **scraping Google Maps data** with an intuitive Django Admin Panel. Perfect for collecting business data, location intelligence, and market research.
 
