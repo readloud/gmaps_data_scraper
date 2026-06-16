@@ -7,12 +7,15 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('/admin-dashboard/')),  # Redirect root ke dashboard
-    path('', lambda request: redirect('scraper_data:dashboard')),  # Redirect ke dashboard
-    path('admin-dashboard/', include('scraper_data.urls')),  # Dashboard di /admin-dashboard/
-    path('scraper/', include('scraper_data.urls')),
+    
+    # 1. Single Root Redirect (Points cleanly to your dashboard app)
+    path('', lambda request: redirect('scraper_data:dashboard')),  
+    
+    # 2. Main Dashboard Routes (Registered only ONCE to prevent namespace collisions)
+    path('admin-dashboard/', include('scraper_data.urls')),  
 ]
-# Serve static files in development
+
+# Serve static files in development AND production fallback if needed
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
