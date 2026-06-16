@@ -215,7 +215,7 @@ class ScraperConfig(models.Model):
         config, created = cls.objects.get_or_create(
             id=1,
             defaults={
-                'headless_mode': False, # This will now safely work
+                'headless_mode': True, # This will now safely work
                 'default_max_results': 50,
                 'scroll_count': 8,
                 'delay_between_scroll': 1.5
