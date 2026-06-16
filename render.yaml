@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: google-maps-scraper
+    runtime: python
+    plan: free
+    autoDeploy: true
+    buildCommand: |
+      pip install -r requirements.txt
+      playwright install chromium
+      python manage.py collectstatic --noinput
+    startCommand: |
+      gunicorn maps_scraper_admin.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PLAYWRIGHT_HEADLESS
+        value: "true"

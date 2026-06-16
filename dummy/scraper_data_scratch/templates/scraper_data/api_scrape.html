@@ -1,0 +1,90 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>🏢 Google Places API Scraper (Resmi)</h3>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <strong>💰 Informasi Biaya:</strong>
+                <ul>
+                    <li>Free tier: 10,000 request/bulan</li>
+                    <li>Google memberikan $200 kredit setiap bulan</li>
+                    <li>Untuk penggunaan UKM, biasanya GRATIS!</li>
+                </ul>
+            </div>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Keyword Pencarian:</label>
+                    <input type="text" name="keyword" class="form-control" 
+                           placeholder="Contoh: klinik kecantikan, bengkel motor, masjid"
+                           required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lokasi (Opsional):</label>
+                    <input type="text" name="location" class="form-control" 
+                           placeholder="Contoh: Karawang, Jakarta, Bandung">
+                    <small class="text-muted">Kosongkan untuk pencarian nasional</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Maksimal Hasil:</label>
+                    <input type="number" name="max_results" class="form-control" 
+                           value="20" min="1" max="60">
+                    <small class="text-muted">Maksimal 60 per pencarian</small>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    🔍 Search dengan Google Places API
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>📊 Perbandingan Scraping vs API</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Web Scraping (Playwright)</th>
+                        <th>Google Places API</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Stabilitas</td>
+                        <td class="text-danger">❌ Sering berubah/block</td>
+                        <td class="text-success">✅ Stabil</td>
+                    </tr>
+                    <tr>
+                        <td>Legalitas</td>
+                        <td class="text-danger">⚠️ Melanggar ToS</td>
+                        <td class="text-success">✅ Resmi</td>
+                    </tr>
+                    <tr>
+                        <td>Data Quality</td>
+                        <td class="text-warning">⚠️ Tergantung parsing</td>
+                        <td class="text-success">✅ Terstruktur</td>
+                    </tr>
+                    <tr>
+                        <td>Biaya</td>
+                        <td class="text-success">✅ Gratis</td>
+                        <td class="text-warning">💰 Ada free tier</td>
+                    </tr>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td class="text-danger">❌ Tinggi</td>
+                        <td class="text-success">✅ Minimal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
