@@ -174,7 +174,11 @@ class ScrapingLog(models.Model):
 class ScraperConfig(models.Model):
     """Model untuk konfigurasi scraper"""
     
-    # REMOVED: headless_mode field
+    headless_mode = models.BooleanField(
+        default=True,  # Default to True for server compatibility
+        verbose_name="Headless Mode",
+        help_text="Jalankan browser tanpa GUI (latar belakang)"
+    )
     
     default_max_results = models.IntegerField(
         default=50,
@@ -201,7 +205,8 @@ class ScraperConfig(models.Model):
         verbose_name_plural = "Konfigurasi Scraper"
     
     def __str__(self):
-        return f"Konfigurasi Scraper - Default: {self.default_max_results} hasil"
+        mode = "Headless" if self.headless_mode else "Visible"
+        return f"Konfigurasi Scraper - {mode}"
     
     @classmethod
     def get_config(cls):
@@ -209,6 +214,7 @@ class ScraperConfig(models.Model):
         config, created = cls.objects.get_or_create(
             id=1,
             defaults={
+                'headless_mode': True,  # Default to True
                 'default_max_results': 50,
                 'scroll_count': 8,
                 'delay_between_scroll': 1.5
