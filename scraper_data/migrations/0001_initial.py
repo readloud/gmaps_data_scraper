@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ScraperConfig',
             fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('headless_mode', models.BooleanField(default=True, help_text='Centang untuk mode otomatis (tidak tampil), tidak centang untuk mode manual (browser muncul)', verbose_name='Mode Headless')),
                 ('default_max_results', models.IntegerField(default=50, help_text='Jumlah default tempat yang diambil setiap scraping', verbose_name='Maksimal Hasil Default')),
                 ('scroll_count', models.IntegerField(default=8, help_text='Berapa kali scroll untuk memuat lebih banyak hasil', verbose_name='Jumlah Scroll')),
@@ -29,6 +30,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ScrapingLog',
             fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('keyword', models.CharField(max_length=200, verbose_name='Keyword')),
                 ('total_found', models.IntegerField(default=0, verbose_name='Total Ditemukan')),
                 ('total_saved', models.IntegerField(default=0, verbose_name='Total Tersimpan')),
@@ -46,6 +48,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Place',
             fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=500, verbose_name='Nama Tempat')),
                 ('category', models.CharField(blank=True, choices=[('masjid', 'Masjid'), ('toko_sembako', 'Toko Sembako'), ('restaurant', 'Restoran'), ('cafe', 'Cafe'), ('hotel', 'Hotel'), ('lainnya', 'Lainnya')], max_length=50, null=True, verbose_name='Kategori')),
                 ('keyword', models.CharField(blank=True, help_text='Keyword yang digunakan saat scraping', max_length=200, verbose_name='Keyword Pencarian')),
