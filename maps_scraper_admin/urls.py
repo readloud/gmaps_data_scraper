@@ -7,9 +7,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/admin-dashboard/', permanent=False)),
+    path('', lambda request: redirect('/admin-dashboard/')),
     path('admin-dashboard/', include('scraper_data.urls')),
-]
+    path('scraper/', include('scraper_data.urls')), 
 
 # Serve static files in development
 if settings.DEBUG:
