@@ -8,11 +8,11 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # 1. Single Root Redirect (Points cleanly to your dashboard app)
+    # Redirect root clean to scraper dashboard
     path('', lambda request: redirect('scraper_data:dashboard')),  
     
-    # 2. Main Dashboard Routes (Registered only ONCE to prevent namespace collisions)
-    path('admin-dashboard/', include('scraper_data.urls')),  
+    # Change 'admin-dashboard/' to 'scraper/' so your old links work!
+    path('scraper/', include('scraper_data.urls')),
 ]
 
 # Serve static files in development AND production fallback if needed
