@@ -19,7 +19,9 @@ from .dynamic_scraper import DynamicGoogleMapsScraper
 import pandas as pd
 from django.urls import re_path
 from .places_api import scrape_with_places_api, GooglePlacesAPIClient
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt  # Hanya untuk debugging!
 @staff_member_required
 def scrape_with_api(request):
     """Scrape menggunakan Google Places API (resmi & stabil)"""
