@@ -1,0 +1,29 @@
+## 📁 Project Structure
+
+```
+maps_scraper_admin/
+├── scraper_data/
+│   ├── templates/
+│   │   ├── admin/
+│   │   │   ├── base_site.html
+│   │   │   └── dashboard.html
+│   │   └── scraper_data/
+│   │       ├── dynamic_scrape.html
+│   │       └── results.html
+│   ├── management/
+│   │   └── commands/
+│   │       └── scrape_playwright.py
+│   ├── admin.py
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   ├── forms.py
+│   ├── dynamic_scraper.py
+│   └── places_api.py
+├── maps_scraper_admin/
+│   ├── settings.py
+│   └── urls.py
+├── manage.py
+├── requirements.txt
+└── README.md
+```
