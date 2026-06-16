@@ -20,7 +20,6 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/admin-dashboard/', permanent=False)),
     path('', lambda request: redirect('/admin-dashboard/')),  # Redirect root ke dashboard
     path('', lambda request: redirect('scraper_data:dashboard')),  # Redirect ke dashboard
     path('admin-dashboard/', include('scraper_data.urls')),  # Dashboard di /admin-dashboard/
