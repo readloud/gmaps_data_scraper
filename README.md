@@ -1,18 +1,32 @@
-# Google Maps Scraper - Google Map API Integration
+# Google Maps Scraper -  - Django Admin Panel
+
+A powerful web application for **scraping Google Maps data** with an intuitive Django Admin Panel. Perfect for collecting business data, location intelligence, and market research.
 
 - [Dashboard](https://github.com/readloud/gmaps_data_scraper/blob/main/dummy/screenshot/Screenshot%20(196).png)
 - [Statistik](https://github.com/readloud/gmaps_data_scraper/blob/main/dummy/screenshot/Screenshot%20(197).png)
 - [Preview](https://github.com/readloud/gmaps_data_scraper/blob/main/dummy/screenshot/Screenshot%20(201).png)
 
-```
+### Prerequisites
+- Python 3.8+
+- Playwright browsers
+- Google Maps API Key (optional, for API mode)
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/readloud/gmaps-data-scraper.git
+cd gmaps-data-scraper
+
 # Buat virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# atau
 venv\Scripts\activate  # Windows
 
 # Install dependencies
 pip install -r requirements.txt
+
+# atau
 
 # Install packages
 pip install django django-import-export pandas openpyxl asyncio
@@ -24,12 +38,6 @@ pip install googlemaps
 # Install Playwright browser
 playwright install chromium
 playwright install firefox  # Opsional, lebih stealth
-
-# Buat project
-django-admin startproject maps_scraper_admin
-
-# Masuk ke project
-cd maps_scraper_admin
 
 # Buat app
 python manage.py startapp scraper_data
@@ -50,27 +58,25 @@ GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', 'your_api_key_here')
 # Jalankan migrasi pertama
 python manage.py makemigrations
 python manage.py migrate
-
-# Buat superuser
 python manage.py createsuperuser
 
 # Jalankan server
 python manage.py runserver
 ```
 
-# Akses Admin Panel
+## Akses Admin Panel
 
 - ✅ Akses: http://127.0.0.1:8000/scraper/api-scrape/
 
-# Akses Admin Panel (Debugging)
+### Debugging
 
 - ✅ Dashboard: http://127.0.0.1:8000/admin-dashboard/
 - ✅ Dynamic Scrape: http://127.0.0.1:8000/scraper/scrape/
 - ✅ Admin Panel: http://127.0.0.1:8000/admin/
 
 
-# Test API di Terminal
-
+### Test API di Terminal
+```
 python manage.py shell
 
 >>from scraper_data.api_scraper import scrape_with_google_api
@@ -78,8 +84,8 @@ python manage.py shell
 # Test untuk taman bermain di Karawang
 >>result = scrape_with_google_api("taman bermain", "Karawang", 10)
 >>print(f"Saved {result} places")
-
-# Hasil dengan API
+```
+### Hasil dengan API
 Untuk "THE NICE PLAYLAND KARAWANG", API akan menghasilkan:
 ```json
 {
