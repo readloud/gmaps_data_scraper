@@ -1,12 +1,9 @@
 # nixpacks.toml
+[build]
+install_cmd = "pip install -r requirements.txt && playwright install chromium && playwright install-deps && DJANGO_COLLECT_STATIC=1 python manage.py collectstatic --noinput"
+
 [phases.setup]
-nixPkgs = ["python311"]
-
-[phases.install]
-cmds = ["pip install -r requirements.txt"]
-
-[phases.build]
-cmds = ["python manage.py collectstatic --noinput"]
+nixPkgs = ["python311", "python311Packages.pip", "nodejs"]
 
 [start]
 cmd = "gunicorn maps_scraper_admin.wsgi:application"
