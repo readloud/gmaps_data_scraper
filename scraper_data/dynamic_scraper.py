@@ -44,7 +44,9 @@ class DynamicGoogleMapsScraper:
     """
     Dynamic Scraper - Fixed to run in headless mode for servers
     """
-    
+    def __init__(self, headless: bool = True, max_results: int = 50):
+        self.headless = True
+        
     INDONESIAN_PROVINCES = [
         'Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau', 'Kepulauan Riau',
         'Jambi', 'Bengkulu', 'Sumatera Selatan', 'Kepulauan Bangka Belitung',
@@ -74,12 +76,8 @@ class DynamicGoogleMapsScraper:
         await self._close()
     
     async def _start(self):
-        """Start browser with headless mode enabled"""
-        self.playwright = await async_playwright().start()
-        
-        # Launch with headless=True for server compatibility
         self.browser = await self.playwright.chromium.launch(
-            headless=True,  # Always headless
+            headless=True,  # ← Must be True
             args=[
                 '--disable-blink-features=AutomationControlled',
                 '--disable-features=IsolateOrigins,site-per-process',
