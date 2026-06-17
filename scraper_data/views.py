@@ -1,4 +1,6 @@
 # scraper_data/views.py
+import subprocess
+import sys
 import asyncio
 import json
 import os
@@ -20,6 +22,26 @@ import pandas as pd
 from django.urls import re_path
 from .places_api import scrape_with_places_api, GooglePlacesAPIClient
 from django.views.decorators.csrf import csrf_exempt
+
+def ensure_playwright_installed():
+    """Ensure Playwright and browsers are installed"""
+    try:
+        import playwright
+        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], 
+                      check=True, capture_output=True)
+        return True
+    except Exception as e:
+        print(f"Playwright installation failed: {e}")
+        return False
+
+@staff_member_required
+def scrape_results(request, keyword, level, value='', max=50):
+    """Execute scraping with browser in HEADLESS MODE"""
+    
+    # Ensure Playwright is installed
+    if not ensure_playwright_installed():
+        messages.error(request, "❌ Playwright not properly installed. Please contact administrator.")
+        return redirect('scraper_data:dynamic_scrape')
 
 @csrf_exempt  # Hanya untuk debugging!
 @staff_member_required
