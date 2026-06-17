@@ -203,7 +203,7 @@ def dynamic_scrape_view(request):
 
 @staff_member_required
 def scrape_results(request, keyword, level, value='', max=50):
-    """Execute scraping dengan browser VISIBLE MODE"""
+    """Execute scraping with browser in HEADLESS MODE for server compatibility"""
     
     config = ScraperConfig.get_config()
     
@@ -217,9 +217,9 @@ def scrape_results(request, keyword, level, value='', max=50):
         asyncio.set_event_loop(loop)
         
         async def run_scraper():
-            # headless = False (selalu visible)
+            # Use headless=True for server environments
             async with DynamicGoogleMapsScraper(
-                headless=False,  # ← SELALU FALSE
+                headless=True,  # ← CHANGE TO TRUE for Railway
                 max_results=int(max) if max else config.default_max_results
             ) as scraper:
                 scraper.scroll_count = config.scroll_count
