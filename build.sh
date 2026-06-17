@@ -8,7 +8,7 @@ echo "🚀 Starting build process..."
 
 # Install Python dependencies
 echo "📦 Installing Python dependencies..."
-pip install --no-cache-dir -r requirements.txt
+pip install -r requirements.txt
 
 # Install Playwright and browsers
 echo "🎭 Installing Playwright and browsers..."
