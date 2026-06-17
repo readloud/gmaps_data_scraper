@@ -5,15 +5,15 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Define DEBUG FIRST
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security - SETELAH SECRET_KEY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-demo-key-change-me')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 if not DEBUG:
     try:
