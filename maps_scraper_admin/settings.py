@@ -5,6 +5,14 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Security - SETELAH SECRET_KEY
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-demo-key-change-me')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
 if not DEBUG:
     try:
         subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], 
@@ -13,13 +21,6 @@ if not DEBUG:
     except Exception as e:
         print(f"⚠️ Could not install Playwright: {e}")
 
-load_dotenv()
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Security - SETELAH SECRET_KEY
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-demo-key-change-me')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 #HEADLESS = os.environ.get('DJANGO_HEADLESS', 'True') == 'True'
 
 # ============ PERBAIKAN CSRF ============
