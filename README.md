@@ -29,9 +29,8 @@ pip install -r requirements.txt
 # atau
 
 # Install packages
-pip install django django-import-export pandas openpyxl asyncio
+pip install django django-import-export pandas openpyxl asyncio dotenv
 pip install playwright playwright-stealth tf-playwright-stealth fake-useragent
-pip install pkg-resources 
 pip install whitenoise
 pip install googlemaps
 

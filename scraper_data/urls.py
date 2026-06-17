@@ -30,4 +30,6 @@ urlpatterns = [
     
     # API quick stats
     path('quick-stats/', views.quick_stats_api, name='quick_stats'),
+    
+    path('manifest.json', views.manifest, name='manifest'),
 ]

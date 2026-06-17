@@ -22,7 +22,33 @@ import pandas as pd
 from django.urls import re_path
 from .places_api import scrape_with_places_api, GooglePlacesAPIClient
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
+def manifest(request):
+    """Serve web app manifest"""
+    manifest_data = {
+        "name": "Google Maps Data Scraper",
+        "short_name": "GMaps Scraper",
+        "description": "Scrape and manage Google Maps data efficiently",
+        "start_url": "/scraper/",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#0d6efd",
+        "icons": [
+            {
+                "src": "/static/icons/icon-192x192.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            },
+            {
+                "src": "/static/icons/icon-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            }
+        ]
+    }
+    return JsonResponse(manifest_data)
+    
 def ensure_playwright_installed():
     """Ensure Playwright and browsers are installed"""
     try:

@@ -6,16 +6,20 @@ from django.conf.urls.static import static
 from django.shortcuts import redirect
 
 urlpatterns = [
+    # Django Admin
     path('admin/', admin.site.urls),
     
-    # Redirect root clean to scraper dashboard
-    path('', lambda request: redirect('scraper_data:dashboard')),  
+    # Root redirect to admin-dashboard
+    path('', lambda request: redirect('/admin-dashboard/')),
     
-    # Change 'admin-dashboard/' to 'scraper/' so your old links work!
-    path('scraper/', include('scraper_data.urls')),
+    # Admin dashboard - using scraper_data.urls with namespace
+    path('admin-dashboard/', include('scraper_data.urls', namespace='admin_dashboard')),
+    
+    # Scraper app - using scraper_data.urls with namespace
+    path('scraper/', include('scraper_data.urls', namespace='scraper')),
 ]
 
-# Serve static files in development AND production fallback if needed
+# Serve static files in development
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
