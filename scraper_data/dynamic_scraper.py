@@ -8,10 +8,11 @@ import re
 from datetime import datetime
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass, asdict, field
-
-import pandas as pd
 from playwright.async_api import async_playwright
+import pandas as pd
+import logging
 
+logger = logging.getLogger(__name__)
 
 @dataclass
 class DynamicPlaceData:
@@ -44,9 +45,7 @@ class DynamicGoogleMapsScraper:
     """
     Dynamic Scraper - Fixed to run in headless mode for servers
     """
-    def __init__(self, headless: bool = True, max_results: int = 50):
-        self.headless = True
-        
+    
     INDONESIAN_PROVINCES = [
         'Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau', 'Kepulauan Riau',
         'Jambi', 'Bengkulu', 'Sumatera Selatan', 'Kepulauan Bangka Belitung',
@@ -60,7 +59,8 @@ class DynamicGoogleMapsScraper:
     ]
     
     def __init__(self, headless: bool = True, max_results: int = 50):
-        self.headless = True  # Always headless for server compatibility
+        """Initialize the scraper with given parameters"""
+        self.headless = headless
         self.max_results = max_results
         self.scroll_count = 5
         self.delay_between_scroll = 2
@@ -76,44 +76,68 @@ class DynamicGoogleMapsScraper:
         await self._close()
     
     async def _start(self):
-        self.browser = await self.playwright.chromium.launch(
-            headless=True,  # ← Must be True
-            args=[
-                '--disable-blink-features=AutomationControlled',
-                '--disable-features=IsolateOrigins,site-per-process',
-                '--no-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-gpu',
-                '--disable-setuid-sandbox',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process',
-                '--disable-web-security',
-            ]
-        )
-        
-        context = await self.browser.new_context(
-            viewport={'width': 1920, 'height': 1080},
-            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            locale='id-ID',
-            timezone_id='Asia/Jakarta'
-        )
-        
-        self.page = await context.new_page()
-        
-        await self.page.set_extra_http_headers({
-            'Accept-Language': 'id-ID,id;q=0.9,en;q=0.8',
-        })
-        
-        print(f"✅ Browser ready (Headless Mode enabled for server compatibility)")
+        """Start browser with headless mode enabled"""
+        try:
+            # Initialize playwright
+            self.playwright = await async_playwright().start()
+            
+            if self.playwright is None:
+                raise RuntimeError("Playwright failed to initialize")
+            
+            # Launch browser with headless=True for server compatibility
+            self.browser = await self.playwright.chromium.launch(
+                headless=self.headless,
+                args=[
+                    '--disable-blink-features=AutomationControlled',
+                    '--disable-features=IsolateOrigins,site-per-process',
+                    '--no-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--disable-setuid-sandbox',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-web-security',
+                ]
+            )
+            
+            if self.browser is None:
+                raise RuntimeError("Browser failed to launch")
+            
+            # Create context and page
+            context = await self.browser.new_context(
+                viewport={'width': 1920, 'height': 1080},
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                locale='id-ID',
+                timezone_id='Asia/Jakarta'
+            )
+            
+            self.page = await context.new_page()
+            
+            await self.page.set_extra_http_headers({
+                'Accept-Language': 'id-ID,id;q=0.9,en;q=0.8',
+            })
+            
+            mode = "Headless" if self.headless else "Visible"
+            print(f"✅ Browser ready ({mode} Mode)")
+            
+        except Exception as e:
+            logger.error(f"Error starting browser: {e}")
+            await self._close()
+            raise
     
     async def _close(self):
-        """Tutup semua resource"""
-        if self.browser:
-            await self.browser.close()
-        if self.playwright:
-            await self.playwright.stop()
-        print("🔒 Browser closed")
+        """Tutup semua resource dengan aman"""
+        try:
+            if self.browser:
+                await self.browser.close()
+                self.browser = None
+            if self.playwright:
+                await self.playwright.stop()
+                self.playwright = None
+            print("🔒 Browser closed")
+        except Exception as e:
+            logger.error(f"Error closing browser: {e}")
     
     async def scrape(self, keyword: str, location: str = "Indonesia", 
                      filter_level: str = "nasional", filter_value: str = "") -> List[DynamicPlaceData]:
