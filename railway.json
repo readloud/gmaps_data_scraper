@@ -4,6 +4,9 @@
     "buildCommand": "bash build.sh"
   },
   "deploy": {
-    "startCommand": "gunicorn maps_scraper_admin.wsgi:application"
+    "startCommand": "gunicorn maps_scraper_admin.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120",
+    "healthcheckPath": "/",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE"
   }
 }
