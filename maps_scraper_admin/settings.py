@@ -15,14 +15,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-demo-key-change-me')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-if not DEBUG:
-    try:
-        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], 
-                      check=True, capture_output=True)
-        print("✅ Playwright browsers installed")
-    except Exception as e:
-        print(f"⚠️ Could not install Playwright: {e}")
-
 #HEADLESS = os.environ.get('DJANGO_HEADLESS', 'True') == 'True'
 
 # ============ PERBAIKAN CSRF ============
